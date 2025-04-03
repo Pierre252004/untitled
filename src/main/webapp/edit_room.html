@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Room</title>
+    <title>Edit Room</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,44 +59,43 @@
             font-size: 16px;
         }
         button {
-            background-color: #28a745;
+            background-color: #ffc107;
             color: white;
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #218838;
+            background-color: #e0a800;
         }
     </style>
     <script>
-        function submitRoom(event) {
+        function submitEdit(event) {
             event.preventDefault();
             const roomData = {
-                hotelId: document.getElementById("hotelId").value,
+                roomId: document.getElementById("roomId").value,
                 type: document.getElementById("roomType").value,
                 price: document.getElementById("roomPrice").value,
             };
 
-            fetch("/api/add_room", {
-                method: "POST",
+            fetch("/api/edit_room", {
+                method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(roomData),
             })
                 .then(res => res.json())
                 .then(result => {
-                    alert("Room added successfully!");
-                    document.getElementById("roomForm").reset();
+                    alert("Room updated successfully!");
                 })
                 .catch(err => {
-                    alert("Error adding room. Please try again.");
+                    alert("Error updating room. Please try again.");
                 });
         }
     </script>
 </head>
 <body>
 <div class="navbar">
-    <div class="logo">Add Room</div>
+    <div class="logo">Edit Room</div>
     <div class="tabs">
         <a href="home.html">Home</a>
         <a href="chain_list.html">Hotel Chains</a>
@@ -110,12 +109,12 @@
 </div>
 
 <div class="container">
-    <h2>Add New Room</h2>
-    <form id="roomForm" onsubmit="submitRoom(event)">
-        <input type="text" id="hotelId" placeholder="Hotel ID" required />
+    <h2>Edit Room Information</h2>
+    <form id="editForm" onsubmit="submitEdit(event)">
+        <input type="text" id="roomId" placeholder="Room ID" required />
         <input type="text" id="roomType" placeholder="Room Type (e.g., Deluxe, Suite)" required />
         <input type="number" id="roomPrice" placeholder="Price per Night" required />
-        <button type="submit">Add Room</button>
+        <button type="submit">Update Room</button>
     </form>
 </div>
 </body>

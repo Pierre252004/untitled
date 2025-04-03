@@ -1,10 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Available Rooms</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .navbar {
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #007bff;
+            color: white;
+        }
+        .tabs {
+            display: flex;
+            gap: 20px;
+            margin: auto;
+        }
+        .tabs a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        .buttons {
+            margin-right: 20px;
+        }
+        .buttons a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            margin-left: 15px;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .room {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        select, input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("/api/available")
+                .then(res => res.json())
+                .then(data => {
+                    displayRooms(data);
+                });
+
+            document.getElementById("searchBtn").addEventListener("click", () => {
+                const type = document.getElementById("typeFilter").value.toLowerCase();
+                const price = document.getElementById("priceFilter").value;
+
+                fetch("/api/available")
+                    .then(res => res.json())
+                    .then(data => {
+                        let filtered = data.filter(room =>
+                            (type ? room.type.toLowerCase().includes(type) : true) &&
+                            (price ? room.price <= parseFloat(price) : true)
+                        );
+                        displayRooms(filtered);
+                    });
+            });
+        });
+
+        function displayRooms(rooms) {
+            const container = document.getElementById("roomList");
+            container.innerHTML = "";
+            if (rooms.length === 0) {
+                container.innerHTML = "<p>No available rooms found.</p>";
+                return;
+            }
+            rooms.forEach(room => {
+                const div = document.createElement("div");
+                div.className = "room";
+                div.innerHTML = `<strong>${room.hotelName}</strong> - ${room.type} - $${room.price}/night`;
+                container.appendChild(div);
+            });
+        }
+    </script>
 </head>
 <body>
+<div class="navbar">
+    <div class="logo">Available Rooms</div>
+    <div class="tabs">
+        <a href="home.html">Home</a>
+        <a href="chain_list.html">Hotel Chains</a>
+        <a href="hotel_list.html">Hotels</a>
+        <a href="booking.html">Booking</a>
+    </div>
+    <div class="buttons">
+        <a href="login.html">Login</a>
+        <a href="signup.html">Register</a>
+    </div>
+</div>
 
+<div class="container">
+    <h2>Search Available Rooms</h2>
+    <input type="text" id="typeFilter" placeholder="Room Type (e.g., deluxe, single)" />
+    <input type="number" id="priceFilter" placeholder="Max Price" />
+    <button id="searchBtn">Search</button>
+
+    <div id="roomList"></div>
+</div>
 </body>
 </html>
