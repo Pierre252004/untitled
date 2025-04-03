@@ -1,121 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Room</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f4f4f4;
-        }
-        .navbar {
-            width: 100%;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #007bff;
-            color: white;
-        }
-        .tabs {
-            display: flex;
-            gap: 20px;
-            margin: auto;
-        }
-        .tabs a {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 8px 12px;
-            border-radius: 4px;
-        }
-        .buttons {
-            margin-right: 20px;
-        }
-        .buttons a {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            margin-left: 15px;
-        }
-        .container {
-            padding: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 8px;
-            margin-top: 30px;
-        }
-        input, select, button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-        }
-        button {
-            background-color: #ffc107;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #e0a800;
-        }
-    </style>
-    <script>
-        function submitEdit(event) {
-            event.preventDefault();
-            const roomData = {
-                roomId: document.getElementById("roomId").value,
-                type: document.getElementById("roomType").value,
-                price: document.getElementById("roomPrice").value,
-            };
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Room</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    .navbar {
+      width: 100%;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #007bff;
+      color: white;
+    }
+    .tabs {
+      display: flex;
+      gap: 20px;
+      margin: auto;
+    }
+    .tabs a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+    .buttons {
+      margin-right: 20px;
+    }
+    .buttons a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      margin-left: 15px;
+    }
+    .container {
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      margin-top: 30px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      background-color: #ffc107;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #e0a800;
+    }
+  </style>
+  <script>
+    function submitEdit(event) {
+      event.preventDefault();
+      const roomData = {
+        roomId: document.getElementById("roomId").value,
+        type: document.getElementById("roomType").value,
+        price: document.getElementById("roomPrice").value,
+      };
 
-            fetch("/api/edit_room", {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(roomData),
-            })
-                .then(res => res.json())
-                .then(result => {
-                    alert("Room updated successfully!");
-                })
-                .catch(err => {
-                    alert("Error updating room. Please try again.");
-                });
-        }
-    </script>
+      fetch("/api/edit_room", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(roomData),
+      })
+        .then(res => res.json())
+        .then(result => {
+          alert("Room updated successfully!");
+        })
+        .catch(err => {
+          alert("Error updating room. Please try again.");
+        });
+    }
+  </script>
 </head>
 <body>
-<div class="navbar">
+  <div class="navbar">
     <div class="logo">Edit Room</div>
     <div class="tabs">
-        <a href="home.html">Home</a>
-        <a href="chain_list.html">Hotel Chains</a>
-        <a href="hotel_list.html">Hotels</a>
-        <a href="manager.html">Manager</a>
+      <a href="home.html">Home</a>
+      <a href="chain_list.html">Hotel Chains</a>
+      <a href="hotel_list.html">Hotels</a>
+      <a href="manager.html">Manager</a>
     </div>
     <div class="buttons">
-        <a href="login.html">Login</a>
-        <a href="signup.html">Register</a>
+      <a href="login.html">Login</a>
+      <a href="signup.html">Register</a>
     </div>
-</div>
+  </div>
 
-<div class="container">
+  <div class="container">
     <h2>Edit Room Information</h2>
     <form id="editForm" onsubmit="submitEdit(event)">
-        <input type="text" id="roomId" placeholder="Room ID" required />
-        <input type="text" id="roomType" placeholder="Room Type (e.g., Deluxe, Suite)" required />
-        <input type="number" id="roomPrice" placeholder="Price per Night" required />
-        <button type="submit">Update Room</button>
+      <input type="text" id="roomId" placeholder="Room ID" required />
+      <input type="text" id="roomType" placeholder="Room Type (e.g., Deluxe, Suite)" required />
+      <input type="number" id="roomPrice" placeholder="Price per Night" required />
+      <button type="submit">Update Room</button>
     </form>
-</div>
+  </div>
 </body>
 </html>

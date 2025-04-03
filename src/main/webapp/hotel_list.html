@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Chains</title>
+    <title>Hotel List</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -51,7 +51,7 @@
             font-weight: bold;
             margin-left: 15px;
         }
-        .chain-container {
+        .hotel-container {
             background: white;
             padding: 20px;
             border-radius: 8px;
@@ -60,50 +60,50 @@
             margin-top: 20px;
             width: 80%;
         }
-        .chain-list {
+        .hotel-list {
             list-style: none;
             padding: 0;
         }
-        .chain-list li {
+        .hotel-list li {
             padding: 10px;
             border-bottom: 1px solid #ddd;
         }
-        .chain-list a {
+        .hotel-list a {
             text-decoration: none;
             color: #007bff;
             font-weight: bold;
         }
-        .chain-list a:hover {
+        .hotel-list a:hover {
             text-decoration: underline;
         }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            fetch("/api/hotel_chains") // API endpoint to fetch hotel chains from the database
+            fetch("/api/hotels") // API endpoint to fetch hotels from the database
                 .then(response => response.json())
                 .then(data => {
-                    const chainList = document.getElementById("chain-list");
-                    chainList.innerHTML = ""; // Clear existing list
-                    data.forEach(chain => {
+                    const hotelList = document.getElementById("hotel-list");
+                    hotelList.innerHTML = ""; // Clear existing list
+                    data.forEach(hotel => {
                         let li = document.createElement("li");
                         let link = document.createElement("a");
-                        link.href = chain.website; // Assuming API returns a 'website' field
-                        link.textContent = chain.name;
+                        link.href = hotel.website; // Assuming API returns a 'website' field
+                        link.textContent = hotel.name;
                         link.target = "_blank"; // Open in a new tab
                         li.appendChild(link);
-                        chainList.appendChild(li);
+                        hotelList.appendChild(li);
                     });
                 })
-                .catch(error => console.error("Error fetching hotel chains:", error));
+                .catch(error => console.error("Error fetching hotels:", error));
         });
     </script>
 </head>
 <body>
     <div class="navbar">
-        <div class="logo">My Website</div>
+        <div class="logo">Hotels</div>
         <div class="tabs">
             <a href="home.html" class="dropbtn">Home</a>
-            <a href="hotel_list.html" class="dropbtn">Hotels</a>
+            <a href="chain_list.html" class="dropbtn">Hotel Chains</a>
             <a href="booking.html" class="dropbtn">Booking</a>
             <a href="available.html" class="dropbtn">Available</a>
         </div>
@@ -112,9 +112,9 @@
             <a href="signup.html">Register</a>
         </div>
     </div>
-    <div class="chain-container">
-        <h2>List of Hotel Chains</h2>
-        <ul class="chain-list" id="chain-list">
+    <div class="hotel-container">
+        <h2>List of Hotels</h2>
+        <ul class="hotel-list" id="hotel-list">
             <li>Loading...</li>
         </ul>
     </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Add Room</title>
+  <title>Remove Room</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -50,7 +50,7 @@
       border-radius: 8px;
       margin-top: 30px;
     }
-    input, select, button {
+    input, button {
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
@@ -59,44 +59,40 @@
       font-size: 16px;
     }
     button {
-      background-color: #28a745;
+      background-color: #dc3545;
       color: white;
       font-weight: bold;
       cursor: pointer;
       transition: background-color 0.3s;
     }
     button:hover {
-      background-color: #218838;
+      background-color: #c82333;
     }
   </style>
   <script>
-    function submitRoom(event) {
+    function submitRemove(event) {
       event.preventDefault();
-      const roomData = {
-        hotelId: document.getElementById("hotelId").value,
-        type: document.getElementById("roomType").value,
-        price: document.getElementById("roomPrice").value,
-      };
+      const roomId = document.getElementById("roomId").value;
 
-      fetch("/api/add_room", {
-        method: "POST",
+      fetch("/api/remove_room", {
+        method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(roomData),
+        body: JSON.stringify({ roomId }),
       })
         .then(res => res.json())
         .then(result => {
-          alert("Room added successfully!");
-          document.getElementById("roomForm").reset();
+          alert("Room removed successfully!");
+          document.getElementById("removeForm").reset();
         })
         .catch(err => {
-          alert("Error adding room. Please try again.");
+          alert("Error removing room. Please try again.");
         });
     }
   </script>
 </head>
 <body>
   <div class="navbar">
-    <div class="logo">Add Room</div>
+    <div class="logo">Remove Room</div>
     <div class="tabs">
       <a href="home.html">Home</a>
       <a href="chain_list.html">Hotel Chains</a>
@@ -110,12 +106,10 @@
   </div>
 
   <div class="container">
-    <h2>Add New Room</h2>
-    <form id="roomForm" onsubmit="submitRoom(event)">
-      <input type="text" id="hotelId" placeholder="Hotel ID" required />
-      <input type="text" id="roomType" placeholder="Room Type (e.g., Deluxe, Suite)" required />
-      <input type="number" id="roomPrice" placeholder="Price per Night" required />
-      <button type="submit">Add Room</button>
+    <h2>Remove Room</h2>
+    <form id="removeForm" onsubmit="submitRemove(event)">
+      <input type="text" id="roomId" placeholder="Room ID" required />
+      <button type="submit">Remove Room</button>
     </form>
   </div>
 </body>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .signup-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+        table {
+            width: 100%;
+        }
+        td {
+            padding: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        h3 {
+            font-size: 12px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            display: none;
+            text-align: left;
+        }
+    </style>
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+            let formData = new FormData(event.target);
+            let password = formData.get("password");
+            let confirmPassword = formData.get("confirm_password");
+            let errorMessage = document.getElementById("error-message");
+            
+            if (password !== confirmPassword) {
+                errorMessage.style.display = "block";
+                errorMessage.innerText = "Error: Passwords do not match!";
+                return false;
+            }
+            
+            errorMessage.style.display = "none";
+            let outputMessage = "Signup Successful!\n";
+            formData.forEach((value, key) => {
+                outputMessage += `${key}: ${value}\n`;
+            });
+            alert(outputMessage);
+        }
+    </script>
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Signup</h2>
+        <form onsubmit="validateForm(event)">
+           <h3>Full Name</h3>
+            <table name="full_name">
+                <tr>
+                    <td><input type="text" name="first_name" placeholder="First Name" required></td>
+                    <td><input type="text" name="middle_initials" placeholder="Middle Initials" maxlength="2"></td>
+                    <td><input type="text" name="last_name" placeholder="Last Name" required></td>
+                </tr>
+            </table>
+            <h3>Address</h3>
+            <table name="address">
+                <tr>
+                    <td><input type="text" name="street_name" placeholder="Street Name" required></td>
+                    <td><input type="text" name="street_number" placeholder="Street Number" required></td>
+                    <td><input type="text" name="apartment_number" placeholder="Apartment Number"></td>
+                </tr>
+            </table>  
+            <input type="text" name="city" placeholder="City" required>
+            <input type="text" name="country" placeholder="Country" required>
+            <input type="text" name="zip" placeholder="ZIP Code" required>
+            <h3>Account Information</h3>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            <p id="error-message" class="error"></p>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+</body>
+</html>

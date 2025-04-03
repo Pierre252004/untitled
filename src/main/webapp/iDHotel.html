@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .navbar {
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #007bff;
+            color: white;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+        .tabs {
+            display: flex;
+            gap: 20px;
+            margin: auto;
+        }
+        .tabs a {
+            font-family: 'Verdana', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        .buttons {
+            margin-right: 20px;
+        }
+        .buttons a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            margin-left: 15px;
+        }
+        .hotel-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-top: 20px;
+            width: 80%;
+        }
+        .hotel-info {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .search-box {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("/api/hotel") // API endpoint to fetch hotel details
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("hotel-name").innerText = data.name;
+                    document.getElementById("hotel-address").innerText = data.address;
+                    document.getElementById("hotel-phone").innerText = data.phone;
+                    document.getElementById("hotel-email").innerText = data.email;
+                    document.getElementById("hotel-rooms").innerText = data.number_of_rooms;
+                    document.getElementById("hotel-manager").innerText = data.manager;
+                    
+                    window.rooms = data.rooms;
+                    displayRooms(data.rooms);
+                })
+                .catch(error => console.error("Error fetching hotel details:", error));
+        });
+        
+        function displayRooms(rooms) {
+            const roomList = document.getElementById("room-list");
+            roomList.innerHTML = "";
+            rooms.forEach(room => {
+                let li = document.createElement("li");
+                li.textContent = `${room.type} - $${room.price} per night`;
+                roomList.appendChild(li);
+            });
+        }
+        
+        function searchRooms() {
+            const searchInput = document.getElementById("search-input").value.toLowerCase();
+            if (!searchInput.trim()) {
+                displayRooms(window.rooms);
+                return;
+            }
+            
+            const filteredRooms = window.rooms.filter(room =>
+                room.type.toLowerCase().includes(searchInput) ||
+                room.price.toString().includes(searchInput)
+            );
+            
+            displayRooms(filteredRooms);
+        }
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">Hotel Example</div>
+        <div class="tabs">
+            <a href="home.html" class="dropbtn">Home</a>
+            <a href="chain_list.html" class="dropbtn">Hotel Chains</a>
+            <a href="hotel_list.html" class="dropbtn">Hotels</a>
+            <a href="booking.html" class="dropbtn">Booking</a>
+            <a href="available.html" class="dropbtn">Available</a>
+            <a href="manager.html" class="dropbtn">Manager</a>
+        </div>
+        <div class="buttons">
+            <a href="login.html">Login</a>
+            <a href="signup.html">Register</a>
+        </div>
+    </div>
+    <div class="hotel-container">
+        <h2 id="hotel-name">Loading...</h2>
+        <p><strong>Address:</strong> <span id="hotel-address">Loading...</span></p>
+        <p><strong>Phone:</strong> <span id="hotel-phone">Loading...</span></p>
+        <p><strong>Email:</strong> <span id="hotel-email">Loading...</span></p>
+        <p><strong>Number of Rooms:</strong> <span id="hotel-rooms">Loading...</span></p>
+        <p><strong>Manager:</strong> <span id="hotel-manager">Loading...</span></p>
+        
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search by price or type...">
+            <button onclick="searchRooms()">Search</button>
+        </div>
+        
+        <p><strong>Available Rooms:</strong></p>
+        <ul id="room-list">
+            <li>Loading...</li>
+        </ul>
+    </div>
+</body>
+</html>

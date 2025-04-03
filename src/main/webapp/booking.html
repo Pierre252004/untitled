@@ -101,7 +101,7 @@
                     }
                 })
                 .catch(error => console.error("Error checking login status:", error));
-
+            
             fetch("/api/hotels")
                 .then(response => response.json())
                 .then(data => {
@@ -123,7 +123,7 @@
                 })
                 .catch(error => console.error("Error fetching hotels:", error));
         });
-
+        
         function loadRooms() {
             const hotelId = document.getElementById("hotel-select").value;
             if (!hotelId || hotelId === "dummy") return;
@@ -148,7 +148,7 @@
                 })
                 .catch(error => console.error("Error fetching rooms:", error));
         }
-
+        
         function submitForm(event) {
             event.preventDefault();
             document.getElementById("error-message").style.display = "block";
@@ -157,36 +157,36 @@
     </script>
 </head>
 <body>
-<div class="navbar">
-    <div class="logo">Booking</div>
-    <div class="tabs">
-        <a href="home.html" class="dropbtn">Home</a>
-        <a href="chain_list.html" class="dropbtn">Hotel Chains</a>
-        <a href="hotel_list.html" class="dropbtn">Hotels</a>
-        <a href="available.html" class="dropbtn">Available</a>
+    <div class="navbar">
+        <div class="logo">Booking</div>
+        <div class="tabs">
+            <a href="home.html" class="dropbtn">Home</a>
+            <a href="chain_list.html" class="dropbtn">Hotel Chains</a>
+            <a href="hotel_list.html" class="dropbtn">Hotels</a>
+            <a href="available.html" class="dropbtn">Available</a>
+        </div>
+        <div class="buttons">
+            <a href="login.html">Login</a>
+            <a href="signup.html">Register</a>
+        </div>
     </div>
-    <div class="buttons">
-        <a href="login.html">Login</a>
-        <a href="signup.html">Register</a>
+    <div class="booking-container">
+        <h2>Make a Booking</h2>
+        <div id="user-info"></div>
+        <p id="error-message" class="error-message"></p>
+        <form class="booking-form" onsubmit="submitForm(event)">
+            <input type="text" id="name-input" placeholder="Full Name" required>
+            <input type="email" id="email-input" placeholder="Email" required>
+            <input type="date" placeholder="Check-in Date" required>
+            <input type="date" placeholder="Check-out Date" required>
+            <select id="hotel-select" required onchange="loadRooms()">
+                <option value="0" disabled selected>Loading Hotels...</option>
+            </select>
+            <select id="room-select" required>
+                <option value="0" disabled selected>Loading Rooms...</option>
+            </select>
+            <button type="submit">Book Now</button>
+        </form>
     </div>
-</div>
-<div class="booking-container">
-    <h2>Make a Booking</h2>
-    <div id="user-info"></div>
-    <p id="error-message" class="error-message"></p>
-    <form class="booking-form" onsubmit="submitForm(event)">
-        <input type="text" id="name-input" placeholder="Full Name" required>
-        <input type="email" id="email-input" placeholder="Email" required>
-        <input type="date" placeholder="Check-in Date" required>
-        <input type="date" placeholder="Check-out Date" required>
-        <select id="hotel-select" required onchange="loadRooms()">
-            <option value="0" disabled selected>Loading Hotels...</option>
-        </select>
-        <select id="room-select" required>
-            <option value="0" disabled selected>Loading Rooms...</option>
-        </select>
-        <button type="submit">Book Now</button>
-    </form>
-</div>
 </body>
 </html>
