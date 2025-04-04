@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" session="true" %>
+<%
+    String username = (String) session.getAttribute("email"); // or "username", depending on what your LoginServlet sets
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,12 +116,25 @@
         <a href="available.html" class="dropbtn">Available</a>
     </div>
     <div class="buttons">
+        <% if (username == null) { %>
         <a href="login.html">Login</a>
         <a href="signup.html">Register</a>
+        <% } else { %>
+        <span style="color:white; font-weight:bold;">Welcome, <%= username %></span>
+        <a href="logout.jsp">Logout</a>
+        <% } %>
     </div>
 </div>
+
 <div class="home-container">
-    <h2 id="welcome-message">Hi! Welcome to the home page.</h2>
+    <h2>
+        Hi, <%= username != null ? username : "Guest" %>! Welcome to the home page.
+    </h2>
 </div>
 </body>
 </html>
+<% if (username == null) { %>
+<a href="login.html">Login</a>
+<% } else { %>
+<span>Welcome, <%= username %></span>
+<% } %>

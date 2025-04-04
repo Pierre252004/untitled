@@ -99,24 +99,12 @@
     </script>
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo">Hotels</div>
-        <div class="tabs">
-            <a href="index.jsp" class="dropbtn">Home</a>
-            <a href="chain_list.html" class="dropbtn">Hotel Chains</a>
-            <a href="booking.html" class="dropbtn">Booking</a>
-            <a href="available.html" class="dropbtn">Available</a>
-        </div>
-        <div class="buttons">
-            <a href="login.html">Login</a>
-            <a href="signup.html">Register</a>
-        </div>
+<h1>Hotel Listings</h1>
+
+<c:forEach var="hotel" items="${hotels}">
+    <div>
+        <strong>${hotel.name}</strong> — ${hotel.address}
     </div>
-    <div class="hotel-container">
-        <h2>List of Hotels</h2>
-        <ul class="hotel-list" id="hotel-list">
-            <li>Loading...</li>
-        </ul>
-    </div>
+</c:forEach>
 </body>
 </html>
