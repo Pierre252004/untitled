@@ -1,3 +1,22 @@
+
+Conversation opened. 1 read message.
+
+Skip to content
+Using Gmail with screen readers
+in:sent
+
+6 of 358
+(no subject)
+Inbox
+
+Pierre Georges <pierregeorges.georges@gmail.com>
+Attachments
+Thu 27 Mar, 22:23 (8 days ago)
+to me
+
+
+15 attachments
+• Scanned by Gmail
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,32 +72,31 @@
             let username = formData.get("username");
             let password = formData.get("password");
             let errorMessage = document.getElementById("error-message");
-            
+
             if (!username || !password) {
                 errorMessage.style.display = "block";
                 errorMessage.innerText = "Error: Username and password are required!";
                 setTimeout(() => { window.location.href = 'home.html'; }, 2000);
                 return false;
             }
-            
+
             errorMessage.style.display = "none";
             let outputMessage = "Login Successful!\n";
             outputMessage += `Username: ${username}\nPassword: ${password}`;
             alert(outputMessage);
-            window.location.href = 'index.jsp';
+            window.location.href = 'home.html';
         }
     </script>
 </head>
 <body>
-    <div class="login-container">
-        <form action="LoginServlet" method="post">
-            <label>Username:</label>
-            <input type="text" name="username" required />
-            <label>Password:</label>
-            <input type="password" name="password" required />
-            <button type="submit">Login</button>
-        </form>
-
-    </div>
+<div class="login-container">
+    <h2>Login</h2>
+    <form onsubmit="validateLogin(event)">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <p id="error-message" class="error"></p>
+        <button type="submit">Login</button>
+    </form>
+</div>
 </body>
 </html>
